@@ -12,3 +12,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   CI and Docs GitHub workflows, coverage tooling, phpDocumentor template,
   README, CONTRIBUTING and license.
 - Brand assets (logos) under `assets/images/`.
+- PSR-3 logging library under the `oihana\logging` namespace, imported from
+  `oihana/php-system`:
+  - `Logger` — daily-file PSR-3 logger with message interpolation.
+  - `CompositeLogger` — broadcasts to many PSR-3 loggers (WeakMap-based).
+  - `LoggerManager` / `MonoLogManager` — log-file management and a
+    Monolog rotating-file logger factory.
+  - `LoggerTrait`, `LoggerManagerTrait`, `DebugTrait` — composable traits.
+  - `enums\LoggerParam`, `enums\MonoLogParam` — configuration keys.
+  - `monolog\processors\EmojiProcessor`, `monolog\processors\SymbolProcessor`.
