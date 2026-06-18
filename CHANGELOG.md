@@ -24,3 +24,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Unit-test suite imported from `oihana/php-system` (PHPUnit, strict mode),
   plus one extra `LoggerTrait` test covering the default-service fallback.
   **100% line coverage** (231/231 lines, 64/64 methods, 9/9 classes), 84 tests.
+- Bilingual user guide under `wiki/` (English + French): getting started
+  (introduction, installation, dependencies), loggers, managers, traits,
+  Monolog processors, enums and a testing guide.
