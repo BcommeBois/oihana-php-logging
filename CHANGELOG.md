@@ -5,7 +5,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## [1.0.0] - 2026-06-18
+
+First public release. The `oihana\logging` namespace is extracted from
+`oihana/php-system` into its own focused, PSR-3 logging package.
 
 ### Added
 - Initial project scaffolding: `composer.json`, `phpunit.xml`, `phpdoc.xml`,
@@ -27,3 +30,5 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Bilingual user guide under `wiki/` (English + French): getting started
   (introduction, installation, dependencies), loggers, managers, traits,
   Monolog processors, enums and a testing guide.
+
+[1.0.0]: https://github.com/BcommeBois/oihana-php-logging/releases/tag/1.0.0
