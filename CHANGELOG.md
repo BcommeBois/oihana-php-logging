@@ -21,3 +21,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - `LoggerTrait`, `LoggerManagerTrait`, `DebugTrait` — composable traits.
   - `enums\LoggerParam`, `enums\MonoLogParam` — configuration keys.
   - `monolog\processors\EmojiProcessor`, `monolog\processors\SymbolProcessor`.
+- Unit-test suite imported from `oihana/php-system` (PHPUnit, strict mode),
+  plus one extra `LoggerTrait` test covering the default-service fallback.
+  **100% line coverage** (231/231 lines, 64/64 methods, 9/9 classes), 84 tests.
