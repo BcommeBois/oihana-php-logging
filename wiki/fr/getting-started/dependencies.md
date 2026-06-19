@@ -16,7 +16,7 @@ Voici ce dont elle a besoin et **pourquoi**.
 | [`oihana/php-files`](https://github.com/BcommeBois/oihana-php-files) | `LoggerManager` | `findFiles`, `getFileLines`, `clearFile`, `countFileLines`, `joinPaths`. |
 | [`oihana/php-reflect`](https://github.com/BcommeBois/oihana-php-reflect) | énumérations | `ConstantsTrait` (introspection des constantes). |
 | [`oihana/php-schema`](https://github.com/BcommeBois/oihana-php-schema) | `LoggerManager::createLog()` | L'objet valeur `xyz\oihana\schema\Log` retourné lors de l'analyse d'une ligne de log. |
-| [`oihana/php-system`](https://github.com/BcommeBois/oihana-php-system) | `Logger` | `ToStringTrait`. |
+| [`oihana/php-traits`](https://github.com/BcommeBois/oihana-php-traits) | `Logger` | `ToStringTrait`. |
 
 ## Pourquoi si peu ?
 

@@ -46,7 +46,7 @@
         "oihana/php-files": "dev-main",
         "oihana/php-reflect": "dev-main",
         "oihana/php-schema": "dev-main",
-        "oihana/php-system": "dev-main"
+        "oihana/php-traits": "dev-main"
     },
     "minimum-stability": "dev",
     "prefer-stable": true,
