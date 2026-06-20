@@ -5,6 +5,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.0.1] - 2026-06-20
+
+### Changed
+- Depend on `oihana/php-traits` instead of `oihana/php-system`. The package
+  only used `oihana\traits\ToStringTrait`; switching to the dedicated package
+  drops the heavy transitive stack (slim, twig, somnambulist, scrapbook,
+  symfony/cache) from the dependency tree. Public API and 100% coverage
+  unchanged.
+
 ## [1.0.0] - 2026-06-19
 
 First public release. The `oihana\logging` namespace is extracted from
