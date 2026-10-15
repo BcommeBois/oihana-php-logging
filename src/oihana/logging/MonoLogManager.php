@@ -31,7 +31,7 @@ use oihana\logging\enums\MonoLogParam;
  * $loggerManager = new MonoLogManager
  * ([
  *     'directory' => '/var/log/myapp',
- *     'filePermissions' => 0664,
+ *     'filePermissions' => 0o664, // or the octal string '0664'
  *     'allowInlineLineBreaks' => true,
  *     'level' => Level::Info,
  *     'maxFiles' => 7
@@ -54,8 +54,8 @@ class MonoLogManager extends LoggerManager
      *     allowInlineLineBreaks?       : bool|null   , // Whether to allow inline line breaks in log entries.
      *     bubbles?                     : bool|null   , // Indicates if the bubbling is active.
      *     directory?                   : string|null , // Base log directory.
-     *     dirPermissions?              : int|null    , // Directory permissions (octal, e.g., 02775).
-     *     filePermissions?             : int|null    , // File permissions (octal, e.g., 0664).
+     *     dirPermissions?              : int|string|null , // Directory permissions : an octal integer (0o2775) or an octal string ("02775").
+     *     filePermissions?             : int|string|null , // File permissions : an octal integer (0o664) or an octal string ("0664").
      *     extension?                   : string|null , // Log file extension (e.g., ".log").
      *     path?                        : string|null , // Subdirectory path inside $directory.
      *     dateFormat?                  : string|null , // Date format for log entries.
@@ -66,18 +66,22 @@ class MonoLogManager extends LoggerManager
      *     maxFiles?                    : int|null      // Maximum number of rotating log files.
      * } $init Optional initialization options.
      *
+     * A permission given as a **string** is read as octal digits (`"0664"`) ; given as an
+     * **integer**, it is taken as is (`0o664`, `0664`, `436`). Both name the same permissions.
+     *
      * @param string|null $name Optional logger channel name.
      */
     public function __construct( array $init = [] , ?string $name = null )
     {
         parent::__construct( $init , $name ) ;
 
-        $level = $init[ MonoLogParam::LEVEL ] ?? $this->level ;
+        $filePermissions = $init[ MonoLogParam::FILE_PERMISSIONS ] ?? $this->filePermissions ;
+        $level           = $init[ MonoLogParam::LEVEL ] ?? $this->level ;
 
         $this->allowInlineLineBreaks      = boolval( $init[ MonoLogParam::ALLOW_INLINE_LINE_BREAKS  ] ?? $this->allowInlineLineBreaks ) ;
         $this->bubbles                    = boolval( $init[ MonoLogParam::BUBBLES  ] ?? $this->bubbles ) ;
         $this->dateFormat                 = $init[ MonoLogParam::DATE_FORMAT ] ?? $this->dateFormat ;
-        $this->filePermissions            = octdec( $init[ MonoLogParam::FILE_PERMISSIONS ] ?? $this->filePermissions ) ;
+        $this->filePermissions            = is_string( $filePermissions ) ? octdec( $filePermissions ) : (int) $filePermissions ;
         $this->format                     = $init[ MonoLogParam::FORMAT ] ?? $this->format ;
         $this->includeStackTraces         = $init[ MonoLogParam::INCLUDE_STACK_TRACES ] ?? $this->includeStackTraces ;
         $this->ignoreEmptyContextAndExtra = $init[ MonoLogParam::IGNORE_EMPTY_CONTEXT_AND_EXTRA ] ?? $this->ignoreEmptyContextAndExtra ;

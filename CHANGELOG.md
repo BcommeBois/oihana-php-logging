@@ -5,6 +5,31 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+## [1.0.2] - 2026-10-15
+
+### Fixed
+- **A log file gets the permissions it was given, whatever their form.**
+  `MonoLogManager` passed `filePermissions` to `octdec()` without looking at
+  it, while its default, `0664`, is already an octal integer : read again as
+  if it were written in decimal, it became `0436` (`r-- -wx rw-`) — the owner
+  could no longer write to its own log file. Every new file of the rotating
+  handler was born so whenever `filePermissions` was left out, or given as an
+  integer as the class docblock showed (`'filePermissions' => 0664`) ; only
+  an octal string (`"0664"`) was read right. It is now read like
+  `LoggerManager` reads `dirPermissions` : a string is converted with
+  `octdec()`, an integer is taken as is. Files already created keep their
+  permissions.
+  - **Docs:** the `MonoLogManager` docblocks (both forms, and an example
+    written `0o664`) ; `wiki/{fr,en}/managers.md` — `DIR_PERMISSIONS` and
+    `FILE_PERMISSIONS` accept an octal integer or an octal string.
+  - **Tests:** `MonoLogManagerTest` — absent, octal strings and octal integers
+    all give the permissions asked, the expected values written as octal
+    literals, never computed by `octdec()` ; a real log file is created
+    `0664` on disk. Back to the former line, `(int)` alone or the guard
+    inverted : the suite goes red each time.
+
 ## [1.0.1] - 2026-06-20
 
 ### Changed

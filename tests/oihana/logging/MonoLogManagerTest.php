@@ -12,6 +12,7 @@ use oihana\logging\enums\LoggerParam;
 use oihana\logging\enums\MonoLogParam;
 use oihana\logging\MonoLogManager;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 final class MonoLogManagerTest extends TestCase
@@ -58,7 +59,7 @@ final class MonoLogManagerTest extends TestCase
         $this->assertFalse( $manager->allowInlineLineBreaks ) ;
         $this->assertFalse( $manager->bubbles ) ;
         $this->assertSame( 'Y-m-d' , $manager->dateFormat ) ;
-        $this->assertSame( octdec( '0664' ) , $manager->filePermissions ) ;
+        $this->assertSame( 0o664 , $manager->filePermissions ) ;
         $this->assertSame( '%message%' , $manager->format ) ;
         $this->assertTrue( $manager->includeStackTraces ) ;
         $this->assertFalse( $manager->ignoreEmptyContextAndExtra ) ;
@@ -70,6 +71,50 @@ final class MonoLogManagerTest extends TestCase
      * Non-regression: building the manager without an explicit level must keep the
      * default Level::Debug enum, not intval() it (which warned and yielded 1).
      */
+    /**
+     * The file permissions, however they are given : the expected values are octal
+     * literals, never computed by octdec() — the function the defect lived in.
+     *
+     * @return array<string, array{0:mixed, 1:int}>
+     */
+    public static function filePermissions(): array
+    {
+        return
+        [
+            'absent'                  => [ null    , 0o664 ] ,
+            'an octal string'         => [ '0664'  , 0o664 ] ,
+            'an octal integer'        => [ 0o664   , 0o664 ] ,
+            'another octal string'    => [ '0640'  , 0o640 ] ,
+            'another octal integer'   => [ 0o600   , 0o600 ] ,
+        ] ;
+    }
+
+    #[DataProvider('filePermissions')]
+    public function testFilePermissionsAreReadWhateverTheirForm( mixed $given , int $expected ): void
+    {
+        $init    = $given === null ? [] : [ MonoLogParam::FILE_PERMISSIONS => $given ] ;
+        $manager = new MonoLogManager( $init ) ;
+
+        $this->assertSame( $expected , $manager->filePermissions , sprintf( 'got 0%o' , $manager->filePermissions ) ) ;
+    }
+
+    public function testANewLogFileIsCreatedWithTheDefaultPermissions(): void
+    {
+        $manager = new MonoLogManager( [ LoggerParam::DIRECTORY => $this->dir ] , 'app' ) ;
+
+        $logger = $manager->createLogger() ;
+        $logger->info( 'written' ) ;
+
+        restore_error_handler() ;
+        restore_exception_handler() ;
+
+        $files = glob( $this->dir . DIRECTORY_SEPARATOR . '*' ) ?: [] ;
+        $this->assertCount( 1 , $files ) ;
+
+        clearstatcache() ;
+        $this->assertSame( '0664' , sprintf( '%04o' , fileperms( $files[ 0 ] ) & 0o777 ) ) ;
+    }
+
     public function testDefaultLevelKeepsTheDebugEnumWithoutCoercion(): void
     {
         $manager = new MonoLogManager( [ LoggerParam::DIRECTORY => $this->dir ] ) ;

@@ -22,7 +22,7 @@ The `$init` array is keyed by [`LoggerParam`](enums.md):
 | `DIRECTORY` | `''` | Base log directory. |
 | `PATH` | `''` | Sub-folder inside the base directory. |
 | `EXTENSION` | `.log` | Log file extension. |
-| `DIR_PERMISSIONS` | `0775` | Permissions for created directories. |
+| `DIR_PERMISSIONS` | `0775` | Permissions for created directories. An octal integer (`0o775`) or an octal string (`"0775"`): both name the same permissions. |
 
 `$name` is the optional channel name, used as the default file base name.
 
@@ -99,7 +99,7 @@ The `$init` array is keyed by [`MonoLogParam`](enums.md):
 | `LEVEL` | `Level::Debug` | Minimum level (a `Monolog\Level` or int). |
 | `MAX_FILES` | `0` | Number of rotated files kept (`0` = keep all). |
 | `BUBBLES` | `true` | Whether records bubble to other handlers. |
-| `FILE_PERMISSIONS` | `0664` | Permissions of created log files. |
+| `FILE_PERMISSIONS` | `0664` | Permissions of created log files. An octal integer (`0o664`) or an octal string (`"0664"`): both name the same permissions. |
 | `DATE_FORMAT` | `Y-m-d H:i:s` | Date format in each line. |
 | `FORMAT` | `%datetime% %channel% %level_name% %message% %context% %extra%\n` | Line format. |
 | `ALLOW_INLINE_LINE_BREAKS` | `true` | Keep multi-line messages inline. |

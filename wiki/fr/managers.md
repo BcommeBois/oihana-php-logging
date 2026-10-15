@@ -23,7 +23,7 @@ Le tableau `$init` est indexé par [`LoggerParam`](enums.md) :
 | `DIRECTORY` | `''` | Répertoire de base des logs. |
 | `PATH` | `''` | Sous-dossier dans le répertoire de base. |
 | `EXTENSION` | `.log` | Extension des fichiers de log. |
-| `DIR_PERMISSIONS` | `0775` | Permissions des répertoires créés. |
+| `DIR_PERMISSIONS` | `0775` | Permissions des répertoires créés. Un entier octal (`0o775`) ou une chaîne octale (`"0775"`), les deux désignent les mêmes droits. |
 
 `$name` est le nom de canal optionnel, utilisé comme nom de base de fichier par défaut.
 
@@ -101,7 +101,7 @@ Le tableau `$init` est indexé par [`MonoLogParam`](enums.md) :
 | `LEVEL` | `Level::Debug` | Niveau minimal (un `Monolog\Level` ou un entier). |
 | `MAX_FILES` | `0` | Nombre de fichiers tournants conservés (`0` = tous). |
 | `BUBBLES` | `true` | Si les enregistrements remontent vers d'autres handlers. |
-| `FILE_PERMISSIONS` | `0664` | Permissions des fichiers de log créés. |
+| `FILE_PERMISSIONS` | `0664` | Permissions des fichiers de log créés. Un entier octal (`0o664`) ou une chaîne octale (`"0664"`), les deux désignent les mêmes droits. |
 | `DATE_FORMAT` | `Y-m-d H:i:s` | Format de date dans chaque ligne. |
 | `FORMAT` | `%datetime% %channel% %level_name% %message% %context% %extra%\n` | Format de ligne. |
 | `ALLOW_INLINE_LINE_BREAKS` | `true` | Conserver les messages multi-lignes en ligne. |
